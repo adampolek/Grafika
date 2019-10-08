@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class GraphicsViewer extends JFrame {
 
     private GraphicsMenuBar menuBar = new GraphicsMenuBar();
-    private GraphicsManagementPanel managementPanel = new GraphicsManagementPanel();
-    private GraphicsImagePanel imagePanel = new GraphicsImagePanel(managementPanel);
+    private GraphicsImagePanel imagePanel = new GraphicsImagePanel(menuBar);
+    private GraphicsManagementPanel managementPanel = new GraphicsManagementPanel(imagePanel);
 
     public GraphicsViewer(){
         Container view = getContentPane();
@@ -27,8 +27,25 @@ public class GraphicsViewer extends JFrame {
     }
 
     public void initializeDrawingFigures() {
-        menuBar.addActionListenerToLineItem(click -> managementPanel.setDrawingFigureLabelText("Line"));
-        menuBar.addActionListenerToRectangleItem(click -> managementPanel.setDrawingFigureLabelText("Rectangle"));
-        menuBar.addActionListenerToCircleItem(click -> managementPanel.setDrawingFigureLabelText("Circle"));
+        menuBar.addActionListenerToLineItem(click -> {
+            menuBar.setValue("Line");
+            managementPanel.setDrawingFigureLabelText("Line");
+        });
+        menuBar.addActionListenerToRectangleItem(click -> {
+            menuBar.setValue("Rectangle");
+            managementPanel.setDrawingFigureLabelText("Rectangle");
+        });
+        menuBar.addActionListenerToCircleItem(click -> {
+            menuBar.setValue("Circle");
+            managementPanel.setDrawingFigureLabelText("Circle");
+        });
+        menuBar.addActionListenerToToggleMove(click -> {
+            menuBar.setMoveEnabled(!menuBar.isMoveEnabled());
+            if(menuBar.isMoveEnabled()){
+                managementPanel.setMoveLabel("Moving Enabled");
+            }else{
+                managementPanel.setMoveLabel("Moving Disabled");
+            }
+        });
     }
 }
