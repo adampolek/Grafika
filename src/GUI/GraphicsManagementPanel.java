@@ -1,14 +1,18 @@
 package GUI;
 
+import components.AddingFigurePanel;
 import enums.FieldSize;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GraphicsManagementPanel extends JPanel {
 
+    ArrayList<Shape> figures = new ArrayList<>();
     private JLabel infoLabel = new JLabel("Now Drawing: ");
     private JLabel drawingFigureLabel = new JLabel("Nothing");
+    private AddingFigurePanel addingPanel = new AddingFigurePanel();
 
     public GraphicsManagementPanel(){
         this.setPreferredSize(new Dimension(300, getHeight()));
@@ -25,9 +29,18 @@ public class GraphicsManagementPanel extends JPanel {
 
         this.add(infoLabel);
         this.add(drawingFigureLabel);
+        this.add(addingPanel);
     }
 
     public void setDrawingFigureLabelText(String text){
         drawingFigureLabel.setText(text);
+    }
+
+    public JLabel getDrawingFigureLabel() {
+        return drawingFigureLabel;
+    }
+
+    public ArrayList<Shape> getFigures() {
+        return figures;
     }
 }

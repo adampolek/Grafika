@@ -2,12 +2,13 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GraphicsViewer extends JFrame {
 
     private GraphicsMenuBar menuBar = new GraphicsMenuBar();
-    private GraphicsImagePanel imagePanel = new GraphicsImagePanel();
     private GraphicsManagementPanel managementPanel = new GraphicsManagementPanel();
+    private GraphicsImagePanel imagePanel = new GraphicsImagePanel(managementPanel);
 
     public GraphicsViewer(){
         Container view = getContentPane();
