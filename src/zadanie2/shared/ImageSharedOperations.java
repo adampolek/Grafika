@@ -75,15 +75,17 @@ public class ImageSharedOperations {
         StringBuilder stringBuilder = new StringBuilder();
         char[] buff = new char[512];
         int r = -1, g = -1, b = -1;
+        int i = -1;
         int w=0, h=0;
         try {
             int buffer;
             do {
                 buffer = reader.read(buff);
                 for (char a: buff) {
+                    i++;
                     if (a == '#') {
-                        if (buff[a + 1] != '\n') {
-                            buff[a + 1] = '#';
+                        if (buff[i + 1] != '\n') {
+                            buff[i + 1] = '#';
                         }
                     } else if (a != '\t' && a != '\n' && a != ' ' && a != '\0') {
                         stringBuilder.append(a);

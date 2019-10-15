@@ -28,7 +28,7 @@ public class ViewerPPM extends JFrame {
         this.files.add(this.loadImage);
         this.files.add(this.saveImage);
 
-        this.add(this.menuBar, BorderLayout.NORTH);
+        this.add(this.menuBar, BorderLayout.PAGE_START);
         this.add(this.imageLabel, BorderLayout.CENTER);
         this.imageLabel.setHorizontalAlignment(JLabel.CENTER);
         this.imageLabel.setVerticalAlignment(JLabel.CENTER);
@@ -54,7 +54,19 @@ public class ViewerPPM extends JFrame {
             int returnValue = imageOpener.showDialog(null, "Select image");
             if(returnValue == JFileChooser.APPROVE_OPTION) {
                 BufferedImage img = ImageSharedOperations.loadImage(imageOpener.getSelectedFile().getPath());
-                this.imageLabel.setIcon(new ImageIcon(img));
+                if(img.getWidth()<400){
+                    Image image = img.getScaledInstance(getWidth()/img.getWidth()
+                            , getHeight()/img.getHeight()
+                            , Image.SCALE_FAST);
+                    this.imageLabel.setIcon(new ImageIcon(image));
+                } else if (img.getWidth()>1400) {
+                    Image image = img.getScaledInstance(getWidth()/2
+                            , getHeight()/2
+                            , Image.SCALE_FAST);
+                    this.imageLabel.setIcon(new ImageIcon(image));
+                } else {
+                        this.imageLabel.setIcon(new ImageIcon(img));
+                }
             }
         });
     }
