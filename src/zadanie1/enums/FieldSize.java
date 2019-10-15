@@ -1,4 +1,4 @@
-package enums;
+package zadanie1.enums;
 
 public enum FieldSize {
     FIELD_WIDTH_SIZE(260),

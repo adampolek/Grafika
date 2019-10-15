@@ -1,6 +1,6 @@
-package components;
+package zadanie1.components;
 
-import enums.FieldSize;
+import zadanie1.enums.FieldSize;
 
 import javax.swing.*;
 import java.awt.*;

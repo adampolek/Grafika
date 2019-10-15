@@ -1,14 +1,13 @@
-package GUI;
+package zadanie1.GUI;
 
-import components.AddingFigurePanel;
-import enums.FieldSize;
+import zadanie1.components.AddingFigurePanel;
+import zadanie1.enums.FieldSize;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 
 public class GraphicsManagementPanel extends JPanel {
 

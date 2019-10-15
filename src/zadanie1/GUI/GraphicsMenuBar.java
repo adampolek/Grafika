@@ -1,4 +1,4 @@
-package GUI;
+package zadanie1.GUI;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
