@@ -2,12 +2,14 @@ package zadanie2.GUI;
 
 import zadanie2.shared.ImageSharedOperations;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class ViewerPPM extends JFrame {
 
@@ -40,7 +42,7 @@ public class ViewerPPM extends JFrame {
                 @Override
                 public boolean accept(File f) {
                     String fileName = f.getName().toLowerCase();
-                    if(fileName.endsWith(".ppm")) {
+                    if(fileName.endsWith(".ppm") || fileName.endsWith(".jpg")) {
                         return true;
                     } else return false;
                 }
@@ -53,21 +55,29 @@ public class ViewerPPM extends JFrame {
 
             int returnValue = imageOpener.showDialog(null, "Select image");
             if(returnValue == JFileChooser.APPROVE_OPTION) {
-                BufferedImage img = ImageSharedOperations.loadImage(imageOpener.getSelectedFile().getPath());
-                if(img.getWidth()<400){
-                    Image image = img.getScaledInstance(getWidth()/img.getWidth()
-                            , getHeight()/img.getHeight()
+                ImageSharedOperations imageSharedOperations = new ImageSharedOperations();
+                String path = imageOpener.getSelectedFile().getPath();
+                if(path.endsWith(".ppm")) {
+                    BufferedImage img = imageSharedOperations.loadImage(imageOpener.getSelectedFile().getPath());
+                    Image image = img.getScaledInstance(img.getWidth() * getWidth() / img.getWidth() - 100
+                            , img.getHeight() * getHeight() / img.getHeight() - 100
                             , Image.SCALE_FAST);
                     this.imageLabel.setIcon(new ImageIcon(image));
-                } else if (img.getWidth()>1400) {
-                    Image image = img.getScaledInstance(getWidth()/2
-                            , getHeight()/2
-                            , Image.SCALE_FAST);
-                    this.imageLabel.setIcon(new ImageIcon(image));
-                } else {
+                } else if(path.endsWith(".jpg") || path.endsWith("jpeg")) {
+                    try {
+                        BufferedImage img = ImageIO.read(imageOpener.getSelectedFile());
                         this.imageLabel.setIcon(new ImageIcon(img));
-                }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }else JOptionPane.showMessageDialog(this, "Invalid Format");
             }
+        });
+
+        this.saveImage.addActionListener(e -> {
+            ImageSharedOperations imageSharedOperations = new ImageSharedOperations();
+            BufferedImage image = imageSharedOperations.convertIconToImage((ImageIcon) imageLabel.getIcon());
+            imageSharedOperations.saveImage(image, "image.jpg");
         });
     }
 }
